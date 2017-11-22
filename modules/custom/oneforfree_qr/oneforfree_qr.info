@@ -1,0 +1,4 @@
+name = One for free - QR
+description = QR generator
+core = 7.x
+php = 5.4

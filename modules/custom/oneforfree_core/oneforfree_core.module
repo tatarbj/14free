@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the oneforfree_core feature.
+ */
+
+include_once 'oneforfree_core.features.inc';
