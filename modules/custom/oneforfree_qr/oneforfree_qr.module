@@ -87,7 +87,7 @@ function _oneforfree_qr_generate($user_id = 0, $event = 0) {
   node_object_prepare($voucher);
   node_save($voucher);
   if (!file_exists($qrpath)) {
-    QRcode::png(url('/oneforfree/qr/check/' . $voucher->nid, array('absolute' => TRUE)), $qrpath);
+    QRcode::png('Content:' . url('/oneforfree/qr/check/' . $voucher->nid, array('absolute' => TRUE)), $qrpath);
 
     $filename = $account->uid . '-' . $event->nid . '-C-qr.png';
     $image = file_get_contents($qrpath);
@@ -138,10 +138,20 @@ function _oneforfree_qr_register($voucher_id) {
 function _oneforfree_qr_check($voucher_id) {
   $voucher = node_load($voucher_id);
   if ($voucher->field_status[LANGUAGE_NONE][0]['value'] == 1) {
-    $qrcode = new QrReader(drupal_realpath($voucher->field_qr_image[LANGUAGE_NONE][0]['uri']));
-    drupal_set_message('Voucher is valid and it\'s now used!');
-    $voucher->field_status[LANGUAGE_NONE][0]['value'] = 2;
-    node_save($voucher);
+    $event = node_load($voucher->field_event[LANGUAGE_NONE][0]['target_id']);
+    if ($event->field_slots[LANGUAGE_NONE][0]['value'] > $event->field_used_slots[LANGUAGE_NONE][0]['value']) {
+      $qrcode = new QrReader(drupal_realpath($voucher->field_qr_image[LANGUAGE_NONE][0]['uri']));
+      drupal_set_message('Voucher is valid and it\'s now used!');
+      $voucher->field_status[LANGUAGE_NONE][0]['value'] = 2;
+      node_save($voucher);
+      $event->field_used_slots[LANGUAGE_NONE][0]['value'] = 
+        $event->field_used_slots[LANGUAGE_NONE][0]['value']+1;
+      node_save($event);
+    }
+    else {
+      drupal_set_message('There is no more available voucher!');
+      return '';
+    }
     return $qrcode->text();
   }
   else if ($voucher->field_status[LANGUAGE_NONE][0]['value'] == 2) {

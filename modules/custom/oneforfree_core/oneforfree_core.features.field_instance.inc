@@ -199,6 +199,56 @@ function oneforfree_core_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_used_slots'.
+  $field_instances['node-event-field_used_slots'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_integer',
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_used_slots',
+    'label' => 'Used slots',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 0,
+    ),
+  );
+
   // Exported field_instance: 'node-voucher-body'.
   $field_instances['node-voucher-body'] = array(
     'bundle' => 'voucher',
@@ -413,8 +463,44 @@ function oneforfree_core_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_address'.
+  $field_instances['user-user-field_address'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'geofield',
+        'settings' => array(
+          'data' => 'full',
+        ),
+        'type' => 'geofield_wkt',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_address',
+    'label' => 'Address',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'geofield',
+      'settings' => array(
+        'html5_geolocation' => 1,
+      ),
+      'type' => 'geofield_latlon',
+      'weight' => 7,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
+  t('Address');
   t('Body');
   t('Business');
   t('Event');
@@ -423,6 +509,7 @@ function oneforfree_core_field_default_field_instances() {
   t('QR image');
   t('Slots');
   t('Status');
+  t('Used slots');
 
   return $field_instances;
 }
